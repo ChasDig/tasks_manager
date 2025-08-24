@@ -20,6 +20,18 @@ class TaskStatusEnum(enum.Enum):
     def names(cls) -> list[str]:
         return [en.name for en in cls]
 
+    @classmethod
+    def statuses_for_create(cls) -> tuple[str, ...]:
+        return cls.create.value,
+
+    @classmethod
+    def new_statuses_for_update(cls) -> tuple[str, ...]:
+        return cls.in_process.value, cls.completed.value
+
+    @classmethod
+    def current_statuses_for_update(cls) -> tuple[str, ...]:
+        return cls.create.value, cls.in_process.value
+
 
 task_status_enum = ENUM(
     *TaskStatusEnum.names(),

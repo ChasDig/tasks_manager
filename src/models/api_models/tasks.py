@@ -1,5 +1,6 @@
 from typing import Any
 from uuid import UUID
+from datetime import datetime
 
 from pydantic import BaseModel, Field
 
@@ -7,7 +8,24 @@ from models.pg_models.task_manager import Task
 from models.pg_models.custom_enum import TaskStatusEnum
 
 
-class TaskDataByIDResponse(BaseModel):
+class CreateTaskRequest(BaseModel):
+    """RequestData - Задача по ID."""
+
+    title: str = Field(
+        description="Наименование Задачи",
+        examples=["Task 1"],
+    )
+    description: str = Field(
+        description="Описание Задачи",
+        examples=["Description Task 1"],
+    )
+    status: TaskStatusEnum | str = Field(
+        description="Статус Задачи",
+        examples=[TaskStatusEnum.create.value],
+    )
+
+
+class TaskDataResponse(BaseModel):
     """ResponseData - Задача по ID."""
 
     id: UUID | str = Field(
@@ -25,6 +43,14 @@ class TaskDataByIDResponse(BaseModel):
     status: TaskStatusEnum | str = Field(
         description="Статус Задачи",
         examples=[TaskStatusEnum.create.value],
+    )
+    created_at: datetime = Field(
+        description="Дата создания Задачи",
+        examples=["2025-08-24 14:08:52.000"],
+    )
+    updated_at: datetime = Field(
+        description="Дата обновления Задачи",
+        examples=["2025-08-24 14:08:52.000"],
     )
 
 class TasksFiltersRequest(BaseModel):
@@ -61,3 +87,20 @@ class TasksFiltersRequest(BaseModel):
             )
 
         return correlated
+
+
+class UpdateTaskRequest(BaseModel):
+    """RequestData - Обновление Задачи."""
+
+    title: str = Field(
+        description="Наименование Задачи",
+        examples=["Task 1"],
+    )
+    description: str = Field(
+        description="Описание Задачи",
+        examples=["Description Task 1"],
+    )
+    status: TaskStatusEnum | str = Field(
+        description="Статус Задачи",
+        examples=[TaskStatusEnum.in_process.value],
+    )

@@ -21,7 +21,14 @@ class Base(DeclarativeBase):
 
 
 class DatetimeStampedMixin:
-    """Postgres mixin - время создания и обновления записи."""
+    """Postgres mixin - время создания и обновления Сущности."""
 
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    updated_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        server_default=func.now(),
+        doc="Дата и время создания Сущности",
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        server_default=func.now(),
+        onupdate=func.now(),
+        doc="Дата и время обновления Сущности",
+    )

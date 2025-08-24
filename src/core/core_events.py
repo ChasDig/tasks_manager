@@ -3,7 +3,7 @@ import functools
 from database import pg_session_factory
 from fastapi import FastAPI
 from sqlalchemy import text
-from utils.custom_exception import StartUpError
+from utils.custom_exception.base import StartUpError
 
 from .app_logger import logger
 

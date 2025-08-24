@@ -11,12 +11,14 @@
 
 
 ## Основные компоненты сервиса (исходя из технических требований):
-- WebAPI: **FastAPI**(ver. 0.116.1, https://fastapi.tiangolo.com);
-- SQLDB: **PostgreSQL**(ver. 17.5, https://www.postgresql.org);
-- Tests: **Pytest**(ver. 8.4.1, https://docs.pytest.org);
+- WebAPI: **FastAPI**(ver. 0.116.1, https://fastapi.tiangolo.com/);
+- SQLDB: **PostgreSQL**(ver. 17.5, https://www.postgresql.org/);
+- Tests: **Pytest**(ver. 8.4.1, https://docs.pytest.org/);
 - Others:
-- - **Pydantic**(ver. 2.11.7, https://docs.pydantic.dev);
+- - **Pydantic**(ver. 2.11.7, https://docs.pydantic.dev/);
 - - **SQLAlchemyORM**(ver. 2.0.41, https://docs.sqlalchemy.org/en/20/);
+- - **Alembic**(ver. 1.16.4, https://alembic.sqlalchemy.org/en/latest/);
+- - **Uvicorn**(ver. 0.35.0, https://www.uvicorn.org/);
 
 
 ## Соглашения разработки:

@@ -31,6 +31,16 @@ class TaskUpdateError(HTTPException):
         )
 
 
+class TaskDeleteError(HTTPException):
+    """Ошибка - ошибка при удалении Задачи."""
+
+    def __init__(self, detail: str = "Error delete Task") -> None:
+        super().__init__(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=detail,
+        )
+
+
 class TaskNotFoundError(HTTPException):
     """Ошибка - Задача не найдена."""
 

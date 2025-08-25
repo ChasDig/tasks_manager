@@ -4,6 +4,7 @@ from .task import (
     TaskCreateError,
     TaskNotFoundError,
     TaskUpdateError,
+    TaskDeleteError,
 )
 
 __all__ = [
@@ -12,4 +13,5 @@ __all__ = [
     "TaskCreateError",
     "TaskNotFoundError",
     "TaskUpdateError",
+    "TaskDeleteError",
 ]

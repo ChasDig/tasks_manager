@@ -16,7 +16,12 @@ from models.api_models import (
     CreateTaskRequest,
     UpdateTaskRequest,
 )
-from utils.custom_exception import TaskCreateError, TaskUpdateError
+from utils.custom_exception import (
+    TaskCreateError,
+    TaskUpdateError,
+    TaskNotFoundError,
+    TaskDeleteError,
+)
 
 
 class TasksBusinessModel(BaseBusinessModel):
@@ -186,6 +191,33 @@ class TasksBusinessModel(BaseBusinessModel):
             await self._pg_session.rollback()
 
             raise TaskUpdateError()
+
+    async def delete(self, task_id: UUID | str) -> None:
+        """
+        Удаление Task.
+
+        @type task_id: UUID
+        @param task_id:
+
+        @rtype: None
+        @return:
+        """
+        stmt = select(Task).where(Task.id == task_id)
+        query = await self._pg_session.execute(stmt)
+        task = query.scalar_one_or_none()
+
+        if not task:
+            raise TaskNotFoundError()
+
+        try:
+            await self._pg_session.delete(task)
+            await self._pg_session.commit()
+
+        except SQLAlchemyError as ex:
+            logger.error(f"[!]Error delete Task: {ex}")
+            await self._pg_session.rollback()
+
+            raise TaskDeleteError()
 
     @staticmethod
     def _get_task_for_response(task: Task) -> TaskDataResponse:

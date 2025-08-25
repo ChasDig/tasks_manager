@@ -23,3 +23,7 @@ class BaseBusinessModel(ABC):
     async def update(self, *args, **kwargs) -> Any:
         """Обновление Сущности."""
         raise NotImplementedError(f"Method not Allowed for {self.cls_name}")
+
+    async def delete(self, *args, **kwargs) -> Any:
+        """Удаление Сущности."""
+        raise NotImplementedError(f"Method not Allowed for {self.cls_name}")

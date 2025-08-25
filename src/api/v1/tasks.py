@@ -147,3 +147,28 @@ async def update_task(
     task = await business_model.update(task_id=task_id, task_data=task_data)
 
     return task
+
+
+@router.delete(
+    "/{task_id}",
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def delete_task(
+    task_id: UUID,
+    pg_session: AsyncSession = Depends(get_pg_session),
+) -> None:
+    """
+    Удаление Task.
+
+    @type task_id: UUID
+    @param task_id:
+    @type pg_session: AsyncSession
+    @param pg_session:
+
+    @rtype: None
+    @return:
+    """
+    business_model = TasksBusinessModel(pg_session=pg_session)
+    await business_model.delete(task_id=task_id)
+
+    return None

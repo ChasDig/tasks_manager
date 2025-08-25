@@ -36,12 +36,12 @@ jobs:
 
       # 6. Ждем, пока сервисы станут доступными (healthcheck)
       - name: Wait for services
-        run: docker-compose exec tests_service python3 utils/wait_for_src.py
+        run: docker compose exec tests_service python3 utils/wait_for_src.py
 
       # 7. Запускаем тесты
       - name: Run functional tests
-        run: docker-compose exec tests_service pytest --rootdir=/app /tests/functional
+        run: docker compose exec tests_service pytest --rootdir=/app /tests/functional
 
       # 8. Останавливаем и удаляем контейнеры
       - name: Tear down
-        run: docker-compose down
+        run: docker compose down

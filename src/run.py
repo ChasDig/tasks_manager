@@ -8,6 +8,7 @@ app = FastAPI(
     title=config.service_name,
     description="Service for CRUD options for tasks manager",
     version="0.1.0",
+    root_path="/task_manager",
 )
 app.include_router(tasks_router)
 register_core_events(app)

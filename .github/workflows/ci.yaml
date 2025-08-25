@@ -32,7 +32,7 @@ jobs:
 
       # 5. Скачиваем образы и запускаем контейнеры
       - name: Build and start services
-        run: docker-compose up -d --build
+        run: docker compose up -d --build
 
       # 6. Ждем, пока сервисы станут доступными (healthcheck)
       - name: Wait for services

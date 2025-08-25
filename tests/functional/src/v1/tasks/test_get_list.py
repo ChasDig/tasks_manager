@@ -115,10 +115,14 @@ async def test_get_list_with_filter(
                 pagination = resp_get_list.get("pagination", {})
 
                 assert len(data) == 1
-                assert {t["id"] for t in data} == {"bf4a4258-2a24-4d5b-890a-6ca25fe7f763", }
+                assert {t["id"] for t in data} == {
+                    "bf4a4258-2a24-4d5b-890a-6ca25fe7f763",
+                }
                 assert pagination.get("total_items") == 1
                 assert pagination.get("total_pages") == 1
-                assert data[0].get("id") == "bf4a4258-2a24-4d5b-890a-6ca25fe7f763"
+                assert data[0].get("id") == (
+                    "bf4a4258-2a24-4d5b-890a-6ca25fe7f763"
+                )
 
         finally:
             if ids := [f"'{t_id}'" for t_id in tasks_ids]:

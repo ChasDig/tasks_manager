@@ -56,10 +56,18 @@ async def test_update_task(payload_create, payload_update, async_pg_session_f):
 
                 assert resp_u.status == 200
                 assert resp_update.get("id") == resp_create.get("id")
-                assert resp_update.get("updated_at") != resp_create.get("updated_at")
-                assert resp_update.get("title") == payload_update.get("title")
-                assert resp_update.get("description") == payload_update.get("description")
-                assert resp_update.get("status") == payload_update.get("status")
+                assert resp_update.get("updated_at") != resp_create.get(
+                    "updated_at"
+                )
+                assert resp_update.get("title") == payload_update.get(
+                    "title"
+                )
+                assert resp_update.get("description") == payload_update.get(
+                    "description"
+                )
+                assert resp_update.get("status") == payload_update.get(
+                    "status"
+                )
 
         finally:
             if task_id:

@@ -6,7 +6,6 @@ services:
     depends_on:
       pg_db:
         condition: service_healthy
-    env_file: ../../.env
     entrypoint: >
       sh -c "python3 utils/wait_for_src.py && pytest /tests/functional"
     networks:
@@ -16,7 +15,6 @@ services:
     build: ../../.
     container_name: task_manager_service
     restart: unless-stopped
-    env_file: ../../.env
     depends_on:
       pg_db:
         condition: service_healthy
@@ -27,7 +25,8 @@ services:
     image: postgres:17.5
     container_name: pg_db
     restart: unless-stopped
-    env_file: ../../.env
+    expose:
+      - "5432"
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_ADMIN_PASSWORD}
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"

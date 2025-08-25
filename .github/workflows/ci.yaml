@@ -20,10 +20,10 @@ jobs:
 
       # 2. Загружаем переменные из .env
       - name: Load .env file
-        uses: actions/load-dotenv@v1
-        with:
-          path: ./.env
-          token: ${{ secrets.TOKEN }}
+        run: |
+          set -o allexport
+          source .env
+          set +oallexport
 
       # 3. Устанавливаем Docker
       - name: Set up Docker

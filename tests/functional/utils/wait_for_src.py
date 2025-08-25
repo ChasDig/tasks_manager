@@ -30,8 +30,8 @@ async def wait_for_src(max_count: int = 5) -> None:
             except (ConnectionError, ClientConnectorError):
                 pass
 
-            await asyncio.sleep(num + 1)
-            num += 1
+            await asyncio.sleep(num + 2)
+            num += 0.5
 
         else:
             raise WaiteServiceError()

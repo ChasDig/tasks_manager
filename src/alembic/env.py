@@ -1,13 +1,12 @@
 import asyncio
 from logging.config import fileConfig
 
+from sqlalchemy import pool
+from sqlalchemy.ext.asyncio import AsyncEngine, async_engine_from_config
 
 from alembic import context  # type: ignore[attr-defined]
 from core.app_config import Settings
 from models.pg_models import Base
-from sqlalchemy import pool
-from sqlalchemy.ext.asyncio import AsyncEngine, async_engine_from_config
-
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -32,7 +31,6 @@ target_metadata = Base.metadata
 
 # Set connection url:
 config.set_main_option("sqlalchemy.url", configs.pg_url_connection)
-
 
 
 def run_migrations_offline() -> None:

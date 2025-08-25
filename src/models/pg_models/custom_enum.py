@@ -22,7 +22,7 @@ class TaskStatusEnum(enum.Enum):
 
     @classmethod
     def statuses_for_create(cls) -> tuple[str, ...]:
-        return cls.create.value,
+        return (cls.create.value,)
 
     @classmethod
     def new_statuses_for_update(cls) -> tuple[str, ...]:

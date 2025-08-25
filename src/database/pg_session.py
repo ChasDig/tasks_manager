@@ -1,9 +1,6 @@
 from contextlib import asynccontextmanager
 from typing import Any, AsyncGenerator
 
-from core.app_config import config
-from core.app_logger import logger
-from core.meta_classes import SingletonMeta
 from sqlalchemy.engine import URL
 from sqlalchemy.exc import InterfaceError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import (
@@ -12,6 +9,10 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
+
+from core.app_config import config
+from core.app_logger import logger
+from core.meta_classes import SingletonMeta
 
 
 class AsyncSessionFactory(metaclass=SingletonMeta):

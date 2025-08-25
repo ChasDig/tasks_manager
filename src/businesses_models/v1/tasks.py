@@ -1,26 +1,26 @@
 from uuid import UUID
 
-from sqlalchemy import select, func, Sequence, update
+from sqlalchemy import Sequence, func, select, update
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from businesses_models.base import BaseBusinessModel
 from core.app_logger import logger
-from models.pg_models import Task
 from models.api_models import (
-    TaskDataResponse,
+    CreateTaskRequest,
+    PagedResponse,
     PageParams,
     SortParams,
+    TaskDataResponse,
     TasksFiltersRequest,
-    PagedResponse,
-    CreateTaskRequest,
     UpdateTaskRequest,
 )
+from models.pg_models import Task
 from utils.custom_exception import (
     TaskCreateError,
-    TaskUpdateError,
-    TaskNotFoundError,
     TaskDeleteError,
+    TaskNotFoundError,
+    TaskUpdateError,
 )
 
 
@@ -68,12 +68,10 @@ class TasksBusinessModel(BaseBusinessModel):
         @rtype task: TaskDataResponse | None
         @return task:
         """
-        stmt = (
-            select(
-                Task,
-            ).where(
-                Task.id == task_id,
-            )
+        stmt = select(
+            Task,
+        ).where(
+            Task.id == task_id,
         )
 
         query = await self._pg_session.execute(stmt)
@@ -110,9 +108,9 @@ class TasksBusinessModel(BaseBusinessModel):
                 func.count(
                     Task.id,
                 ),
-            ).select_from(
-                Task
-            ).where(
+            )
+            .select_from(Task)
+            .where(
                 *alchemy_filters,
             )
         )
@@ -123,13 +121,17 @@ class TasksBusinessModel(BaseBusinessModel):
         search_tasks_stmt = (
             select(
                 Task,
-            ).where(
+            )
+            .where(
                 *alchemy_filters,
-            ).offset(
+            )
+            .offset(
                 page_params.offset,
-            ).limit(
+            )
+            .limit(
                 page_params.limit,
-            ).order_by(
+            )
+            .order_by(
                 sort_params.correlate_with_alchemy(Task),
             )
         )
@@ -163,9 +165,11 @@ class TasksBusinessModel(BaseBusinessModel):
         stmt = (
             update(
                 Task,
-            ).where(
+            )
+            .where(
                 Task.id == task_id,
-            ).values(
+            )
+            .values(
                 **task_data.model_dump(),
             )
         )
@@ -184,7 +188,6 @@ class TasksBusinessModel(BaseBusinessModel):
             task: Task = query.scalar_one_or_none()
 
             return self._get_task_for_response(task=task)
-
 
         except SQLAlchemyError as ex:
             logger.error(f"[!]Error update Task: {ex}")

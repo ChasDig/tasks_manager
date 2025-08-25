@@ -1,8 +1,9 @@
 import functools
 
-from database import pg_session_factory
 from fastapi import FastAPI
 from sqlalchemy import text
+
+from database import pg_session_factory
 from utils.custom_exception.base import StartUpError
 
 from .app_logger import logger
@@ -24,9 +25,8 @@ class StartUpEvents:
                 start_up_errors.append(f"'{name}' - {ex}")
 
         if start_up_errors:
-            raise StartUpError(
-                f"[!]Error StartUp events: {'; '.join(start_up_errors)}"
-            )
+            error = f"[!]Error StartUp events: {'; '.join(start_up_errors)}"
+            raise StartUpError(error)
 
     @staticmethod
     async def check_postgres() -> None:
@@ -44,4 +44,3 @@ def register_core_events(app: FastAPI) -> None:
         "startup",
         functools.partial(StartUpEvents.exec),
     )
-

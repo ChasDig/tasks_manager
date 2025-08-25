@@ -1,11 +1,11 @@
+from datetime import datetime
 from typing import Any
 from uuid import UUID
-from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-from models.pg_models.task_manager import Task
 from models.pg_models.custom_enum import TaskStatusEnum
+from models.pg_models.task_manager import Task
 
 
 class CreateTaskRequest(BaseModel):
@@ -53,6 +53,7 @@ class TaskDataResponse(BaseModel):
         examples=["2025-08-24 14:08:52.000"],
     )
 
+
 class TasksFiltersRequest(BaseModel):
     """RequestData - фильтры Задач по ID."""
 
@@ -82,9 +83,7 @@ class TasksFiltersRequest(BaseModel):
             )
 
         if self.status:
-            correlated.append(
-                Task.status == self.status.value
-            )
+            correlated.append(Task.status == self.status.value)
 
         return correlated
 

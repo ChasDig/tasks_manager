@@ -21,9 +21,9 @@ class SettingsTest(BaseSettings):
         alias="TASK_MANAGER_SERVICE_HOST",
         default="127.0.0.1",
     )
-    service_port: str = Field(
+    service_port: int = Field(
         alias="TASK_MANAGER_SERVICE_PORT",
-        default="8001",
+        default=8001,
     )
 
     @computed_field

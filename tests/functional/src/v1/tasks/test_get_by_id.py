@@ -18,7 +18,18 @@ from configs import config_t
     ],
 )
 @pytest.mark.asyncio
-async def test_get_by_id_task(payload, async_pg_session_f):
+async def test_get_by_id_task(payload, async_pg_session_f) -> None:
+    """
+    Тест: получение задачи по ID.
+
+    @type payload:
+    @param payload:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri_create = "/task_manager/tasks/"
     uri_get = "/task_manager/tasks/{task_id}"
 

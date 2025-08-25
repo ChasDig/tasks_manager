@@ -25,7 +25,24 @@ from configs import config_t
     ],
 )
 @pytest.mark.asyncio
-async def test_update_task(payload_create, payload_update, async_pg_session_f):
+async def test_update_task(
+    payload_create,
+    payload_update,
+    async_pg_session_f,
+) -> None:
+    """
+    Тест: обновление задачи по ID.
+
+    @type payload_create:
+    @param payload_create:
+    @type payload_update:
+    @param payload_update:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri_create = "/task_manager/tasks/"
     uri_update = "/task_manager/tasks/{task_id}"
 

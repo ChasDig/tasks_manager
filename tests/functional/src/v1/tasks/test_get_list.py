@@ -33,7 +33,20 @@ async def test_get_list(
     sql_query_create_tasks,
     tasks_ids,
     async_pg_session_f,
-):
+) -> None:
+    """
+    Тест: получение списка задач.
+
+    @type sql_query_create_tasks:
+    @param sql_query_create_tasks:
+    @type tasks_ids:
+    @param tasks_ids:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri_get_list = "/task_manager/tasks/"
 
     async with aiohttp.ClientSession() as client_session:
@@ -94,7 +107,20 @@ async def test_get_list_with_filter(
     sql_query_create_tasks,
     tasks_ids,
     async_pg_session_f,
-):
+) -> None:
+    """
+    Тест: получение списка задач с фильтрацией.
+
+    @type sql_query_create_tasks:
+    @param sql_query_create_tasks:
+    @type tasks_ids:
+    @param tasks_ids:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri_get_list_filter = "/task_manager/tasks/?title=Test1"
 
     async with aiohttp.ClientSession() as client_session:
@@ -160,7 +186,20 @@ async def test_get_list_with_sort(
     sql_query_create_tasks,
     tasks_ids,
     async_pg_session_f,
-):
+) -> None:
+    """
+    Тест: получение списка задач с сортировкой.
+
+    @type sql_query_create_tasks:
+    @param sql_query_create_tasks:
+    @type tasks_ids:
+    @param tasks_ids:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri_get_list_sort = "/task_manager/tasks/?sort_by=title&sort_order=desc"
 
     async with aiohttp.ClientSession() as client_session:
@@ -221,7 +260,20 @@ async def test_get_list_with_page_params(
     sql_query_create_tasks,
     tasks_ids,
     async_pg_session_f,
-):
+) -> None:
+    """
+    Тест: получение списка задач с параметрами запроса.
+
+    @type sql_query_create_tasks:
+    @param sql_query_create_tasks:
+    @type tasks_ids:
+    @param tasks_ids:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri_get_list_pp = "/task_manager/tasks/?size=1&page=1"
 
     async with aiohttp.ClientSession() as client_session:

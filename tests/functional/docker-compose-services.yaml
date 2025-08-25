@@ -1,17 +1,4 @@
 services:
-  tests_service:
-    build:
-      context: .
-    container_name: tests_service
-    depends_on:
-      pg_db:
-        condition: service_healthy
-    env_file: ../../.env
-    entrypoint: >
-      sh -c "python3 utils/wait_for_src.py && pytest /tests/functional"
-    networks:
-      - sec_network
-
   task_manager_service:
     build: ../../.
     container_name: task_manager_service

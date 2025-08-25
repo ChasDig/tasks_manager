@@ -18,7 +18,18 @@ from configs import config_t
     ],
 )
 @pytest.mark.asyncio
-async def test_create_task(payload, async_pg_session_f):
+async def test_create_task(payload, async_pg_session_f) -> None:
+    """
+    Тест: создание задачи.
+
+    @type payload:
+    @param payload:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri = "/task_manager/tasks/"
 
     async with aiohttp.ClientSession() as client_session:
@@ -60,7 +71,18 @@ async def test_create_task(payload, async_pg_session_f):
     ],
 )
 @pytest.mark.asyncio
-async def test_create_task_error(payload, async_pg_session_f):
+async def test_create_task_error(payload, async_pg_session_f) -> None:
+    """
+    Тест: ошибка создания задачи.
+
+    @type payload:
+    @param payload:
+    @type async_pg_session_f:
+    @param async_pg_session_f:
+
+    @rtype: None
+    @return:
+    """
     uri = "/task_manager/tasks/"
 
     async with aiohttp.ClientSession() as client_session:

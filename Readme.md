@@ -52,7 +52,7 @@ uvicorn run:app --reload --port 8000
 6. Перейдите в документацию **Swagger**: http://127.0.0.1:8000/task_manager/docs
 
 
-#### Если запуск происходит локально через **docker-compose**:
+#### Если запуск происходит через **docker-compose**:
 1. Скопируйте параметры виртуальной среды в файл **.env**(в корень проекта). Обязательны параметры, отмеченные 
 **[Docker_Compose]**. Вы так же можете скопировать туда все конфиги, указанные в **.env_examples_docker_compose** 
 (минимальный набор параметров для запуска в docker-compose)
@@ -72,15 +72,17 @@ docker compose -f ./docker-compose.yaml -f docker-compose.override.yaml up -d
 
 ## Запуск тестов:
 Примечание: при работе через **Pycharm** указать директорию **./tests/functional** как root.
+Проверяйте указанные параметры виртуального окружения.
 
-1. Скопируйте параметры виртуальной среды в файл **.env**(в корень проекта). Обязательны параметры, отмеченные 
-**[Docker_Compose]**. Вы так же можете скопировать туда все конфиги, указанные в **.env_examples_docker_compose** 
-(минимальный набор параметров для запуска в docker-compose)
+#### Если запуск происходит локально:
+1. Скопируйте параметры виртуальной среды в файл **.env**(в корень проекта). Вы можете скопировать туда все конфиги, 
+указанные в **tests/functional/.env_examples_local** 
+(минимальный набор параметров для запуска локально)
 
-2. Запуск проекта в **docker-compose**:
+2. Запуск тестируемых сервисов в **docker-compose**:
 ```sh
 cd ./tests/functional
-docker compose -f ./docker-compose-services.yaml up -d
+docker compose --env-file ../../.env -f ./docker-compose-services.yaml up -d
 ```
 
 3. Установка зависимостей:
@@ -89,8 +91,15 @@ cd ./tests/functional
 pip install -r requirements.txt
 ```
 
-4. Запуск самих тестов:
+
+#### Если запуск происходит через **docker-compose**:
+1. Скопируйте параметры виртуальной среды в файл **.env**(в корень проекта). Вы можете скопировать туда все конфиги, 
+указанные в **tests/functional/.env_examples_docker_compose** 
+(минимальный набор параметров для запуска в docker-compose)
+
+2. Запуск тестов:
 ```sh
+cd ./tests/functional
 docker compose --env-file ../../.env -f ./docker-compose.yaml up -d
 ```
 
@@ -134,3 +143,24 @@ docker compose --env-file ../../.env -f ./docker-compose.yaml up -d
 - - **flake8** - проверка стиля и ошибок;
 - - **mypy** - статическая типизация;
 - - **isort** - сортировка импортов;
+
+
+## **Работа с Alembic:**
+### Создание миграции:
+```sh
+alembic revision --autogenerate -m "message"
+```
+
+### Выполнение миграции:
+```sh
+alembic upgrade head
+```
+
+### Откат миграции на 1 шаг:
+```sh
+alembic downgrade -1
+```
+
+
+## **Осознанные допущения в проекте:**
+TODO:

@@ -20,10 +20,7 @@ jobs:
 
       # 2. Загружаем переменные из .env
       - name: Load .env file
-        run: |
-          set -o allexport
-          source .env
-          set +oallexport
+        run: cp ./env_examples/.env_ci .env
 
       # 3. Устанавливаем Docker
       - name: Set up Docker

@@ -1,0 +1,26 @@
+@startuml
+
+!define WEB_INTERFACE #FFA07A
+!define NGINX #FFD700
+!define SERVICE #98FB98
+!define STORAGE #87CEEB
+
+rectangle "Client" as client {
+  component "Web-Interface" as web_interface WEB_INTERFACE
+}
+
+rectangle "Backend" as backend {
+  component "Nginx" as nginx NGINX
+  component "Task_Manager_Service" as task_manager_service SERVICE
+
+  database "DB (PostgreSQL)" as db STORAGE
+}
+
+web_interface -> nginx
+nginx -> task_manager_service
+task_manager_service -> db
+db -> task_manager_service
+task_manager_service -> nginx
+nginx -> web_interface
+
+@enduml

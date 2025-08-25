@@ -23,6 +23,7 @@ jobs:
         uses: joelwmale/env-action@v1
         with:
           envFile: ./.env
+          token: ${{ secrets.TOKEN }}
 
       # 3. Устанавливаем Docker
       - name: Set up Docker

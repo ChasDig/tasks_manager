@@ -2,9 +2,8 @@ from typing import Any
 
 import aiohttp
 import pytest
-from sqlalchemy import text
-
 from configs import config_t
+from sqlalchemy import text
 
 
 @pytest.mark.parametrize(
@@ -52,9 +51,7 @@ async def test_create_task(payload, async_pg_session_f) -> None:
             finally:
                 if task_id := resp_data.get("id"):
                     await async_pg_session_f.execute(
-                        text(
-                            "DELETE FROM task_manager.task WHERE id = :task_id"
-                        ),
+                        text("DELETE FROM task_manager.task WHERE id = :task_id"),
                         {"task_id": task_id},
                     )
                     await async_pg_session_f.commit()
@@ -102,9 +99,7 @@ async def test_create_task_error(payload, async_pg_session_f) -> None:
         finally:
             if task_id:
                 await async_pg_session_f.execute(
-                    text(
-                        "DELETE FROM task_manager.task WHERE id = :task_id"
-                    ),
+                    text("DELETE FROM task_manager.task WHERE id = :task_id"),
                     {"task_id": task_id},
                 )
                 await async_pg_session_f.commit()

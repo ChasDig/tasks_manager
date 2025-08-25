@@ -1,8 +1,9 @@
 import asyncio
+
 import aiohttp
 from aiohttp.client_exceptions import ClientConnectorError
-
 from configs import config_t
+
 from utils.custom_exception import WaiteServiceError
 
 
@@ -36,5 +37,5 @@ async def wait_for_src(max_count: int = 5) -> None:
             raise WaiteServiceError()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(wait_for_src())

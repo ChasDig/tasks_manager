@@ -1,11 +1,10 @@
-from datetime import datetime, UTC
+from datetime import UTC, datetime
 from typing import Any
 
 import aiohttp
 import pytest
-from sqlalchemy import text
-
 from configs import config_t
+from sqlalchemy import text
 
 
 @pytest.mark.parametrize(
@@ -13,12 +12,12 @@ from configs import config_t
     [
         (
             f"""
-            INSERT INTO task_manager.task 
+            INSERT INTO task_manager.task
             (id, title, description, status, created_at, updated_at)
-            VALUES 
-            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'Test1', 'Test 1', 
-            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'), 
-            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'Test2', 'Test 2', 
+            VALUES
+            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'Test1', 'Test 1',
+            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'),
+            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'Test2', 'Test 2',
             'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}');
             """,
             [
@@ -87,12 +86,12 @@ async def test_get_list(
     [
         (
             f"""
-            INSERT INTO task_manager.task 
+            INSERT INTO task_manager.task
             (id, title, description, status, created_at, updated_at)
-            VALUES 
-            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'Test1', 'Test 1', 
-            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'), 
-            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'Test2', 'Test 2', 
+            VALUES
+            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'Test1', 'Test 1',
+            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'),
+            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'Test2', 'Test 2',
             'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}');
             """,
             [
@@ -146,9 +145,7 @@ async def test_get_list_with_filter(
                 }
                 assert pagination.get("total_items") == 1
                 assert pagination.get("total_pages") == 1
-                assert data[0].get("id") == (
-                    "bf4a4258-2a24-4d5b-890a-6ca25fe7f763"
-                )
+                assert data[0].get("id") == ("bf4a4258-2a24-4d5b-890a-6ca25fe7f763")
 
         finally:
             if ids := [f"'{t_id}'" for t_id in tasks_ids]:
@@ -166,12 +163,12 @@ async def test_get_list_with_filter(
     [
         (
             f"""
-            INSERT INTO task_manager.task 
+            INSERT INTO task_manager.task
             (id, title, description, status, created_at, updated_at)
-            VALUES 
-            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'ATest', 'Test A', 
-            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'), 
-            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'BTest', 'Test B', 
+            VALUES
+            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'ATest', 'Test A',
+            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'),
+            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'BTest', 'Test B',
             'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}');
             """,
             [
@@ -240,12 +237,12 @@ async def test_get_list_with_sort(
     [
         (
             f"""
-            INSERT INTO task_manager.task 
+            INSERT INTO task_manager.task
             (id, title, description, status, created_at, updated_at)
-            VALUES 
-            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'ATest', 'Test A', 
-            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'), 
-            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'BTest', 'Test B', 
+            VALUES
+            ('bf4a4258-2a24-4d5b-890a-6ca25fe7f763', 'ATest', 'Test A',
+            'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}'),
+            ('1bfcce92-3c06-44f7-81e6-a1f17b7cf656', 'BTest', 'Test B',
             'create', '{datetime.now(tz=UTC)}', '{datetime.now(tz=UTC)}');
             """,
             [

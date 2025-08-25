@@ -1,8 +1,8 @@
-from .paginator import PageParams, Pagination, PagedResponse, SortParams
+from .paginator import PagedResponse, PageParams, Pagination, SortParams
 from .tasks import (
+    CreateTaskRequest,
     TaskDataResponse,
     TasksFiltersRequest,
-    CreateTaskRequest,
     UpdateTaskRequest,
 )
 

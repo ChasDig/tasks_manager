@@ -15,7 +15,7 @@ async def get_page_params(
         ge=1,
         lt=100,
         description="Кол-во элементов на странице",
-    )
+    ),
 ) -> PageParams:
     return PageParams(page=page, size=size)
 
@@ -28,6 +28,6 @@ async def get_sort_params(
     sort_order: SortEnum = Query(
         default=SortEnum.desc,
         description=f"Порядок сортировки ({SortEnum.names()})",
-    )
+    ),
 ) -> SortParams:
     return SortParams(sort_by=sort_by, sort_order=sort_order)

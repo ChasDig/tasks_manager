@@ -1,23 +1,24 @@
 from uuid import UUID
 
-from fastapi import APIRouter, status, Depends, Response
+from fastapi import APIRouter, Depends, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import get_pg_session
 from businesses_models.v1 import TasksBusinessModel
+from database import get_pg_session
 from dependencies import get_page_params, get_sort_params
 from dependencies.v1 import (
-    get_tasks_filters_request,
     check_task_before_create,
     check_task_before_update,
+    get_tasks_filters_request,
 )
 from models.api_models import (
-    TaskDataResponse,
-    PageParams,
-    TasksFiltersRequest,
-    SortParams,
+    CreateTaskRequest,
     PagedResponse,
-    CreateTaskRequest, UpdateTaskRequest,
+    PageParams,
+    SortParams,
+    TaskDataResponse,
+    TasksFiltersRequest,
+    UpdateTaskRequest,
 )
 
 router = APIRouter(

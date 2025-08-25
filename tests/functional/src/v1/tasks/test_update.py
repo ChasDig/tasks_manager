@@ -2,9 +2,8 @@ from typing import Any
 
 import aiohttp
 import pytest
-from sqlalchemy import text
-
 from configs import config_t
+from sqlalchemy import text
 
 
 @pytest.mark.parametrize(
@@ -73,25 +72,17 @@ async def test_update_task(
 
                 assert resp_u.status == 200
                 assert resp_update.get("id") == resp_create.get("id")
-                assert resp_update.get("updated_at") != resp_create.get(
-                    "updated_at"
-                )
-                assert resp_update.get("title") == payload_update.get(
-                    "title"
-                )
+                assert resp_update.get("updated_at") != resp_create.get("updated_at")
+                assert resp_update.get("title") == payload_update.get("title")
                 assert resp_update.get("description") == payload_update.get(
                     "description"
                 )
-                assert resp_update.get("status") == payload_update.get(
-                    "status"
-                )
+                assert resp_update.get("status") == payload_update.get("status")
 
         finally:
             if task_id:
                 await async_pg_session_f.execute(
-                    text(
-                        "DELETE FROM task_manager.task WHERE id = :task_id"
-                    ),
+                    text("DELETE FROM task_manager.task WHERE id = :task_id"),
                     {"task_id": task_id},
                 )
                 await async_pg_session_f.commit()

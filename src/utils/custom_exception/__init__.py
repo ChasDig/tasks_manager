@@ -2,9 +2,9 @@ from .base import StartUpError
 from .task import (
     TaskAlreadyExistsError,
     TaskCreateError,
+    TaskDeleteError,
     TaskNotFoundError,
     TaskUpdateError,
-    TaskDeleteError,
 )
 
 __all__ = [

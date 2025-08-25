@@ -1,14 +1,13 @@
 from typing import AsyncGenerator
 
 import pytest_asyncio
+from configs import config_t
 from sqlalchemy import engine
 from sqlalchemy.ext.asyncio import (
-    create_async_engine,
     AsyncSession,
     async_sessionmaker,
+    create_async_engine,
 )
-
-from configs import config_t
 
 
 @pytest_asyncio.fixture(scope="function")

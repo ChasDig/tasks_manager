@@ -1,8 +1,10 @@
+from typing import Any
+
 from sqlalchemy import String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from .base import Base, DatetimeStampedMixin
-from .custom_enum import Schemas, task_status_enum, TaskStatusEnum
+from .custom_enum import Schemas, TaskStatusEnum, task_status_enum
 
 
 class Task(Base, DatetimeStampedMixin):
@@ -28,5 +30,5 @@ class Task(Base, DatetimeStampedMixin):
         doc="Статус задачи",
     )
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str | Any:
         return self.title

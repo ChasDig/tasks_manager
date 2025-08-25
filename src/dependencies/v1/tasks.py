@@ -1,22 +1,22 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import Query, Body, Depends
+from fastapi import Body, Depends, Query
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from database import get_pg_session
+from models.api_models import (
+    CreateTaskRequest,
+    TasksFiltersRequest,
+    UpdateTaskRequest,
+)
 from models.pg_models import Task
 from models.pg_models.custom_enum import TaskStatusEnum
 from utils.custom_exception import (
     TaskAlreadyExistsError,
     TaskCreateError,
     TaskNotFoundError,
-)
-from models.api_models import (
-    TasksFiltersRequest,
-    CreateTaskRequest,
-    UpdateTaskRequest,
 )
 
 
@@ -30,7 +30,7 @@ async def get_tasks_filters_request(
         default=None,
         description="Статус Задачи",
         examples=[TaskStatusEnum.create.name],
-    )
+    ),
 ) -> TasksFiltersRequest:
     return TasksFiltersRequest(title=title, status=status)
 
@@ -45,13 +45,11 @@ async def check_task_before_create(
         raise TaskCreateError(detail=detail)
 
     # Проверка: наличие не завершенной Задачи с таким же наименованием
-    stmt = (
-        select(
-            Task,
-        ).where(
-            Task.title == task_data.title,
-            Task.status != TaskStatusEnum.completed.value,
-        )
+    stmt = select(
+        Task,
+    ).where(
+        Task.title == task_data.title,
+        Task.status != TaskStatusEnum.completed.value,
     )
     query = await pg_session.execute(stmt)
 
@@ -92,4 +90,3 @@ async def check_task_before_update(
         )
 
     return task_data
-

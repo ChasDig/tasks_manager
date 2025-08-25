@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field
-from typing import Generic, TypeVar, Type, Sequence, Any
 from math import ceil
+from typing import Any, Generic, Sequence, Type, TypeVar
 
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import class_mapper
 
 from models.pg_models import Base
@@ -111,6 +111,7 @@ class Pagination(BaseModel):
         description="Предыдущая страница",
     )
 
+
 class PagedResponse(BaseModel, Generic[DataT]):
     """Параметр выборки - параметры пагинации + возвращаемые значения."""
 
@@ -124,10 +125,10 @@ class PagedResponse(BaseModel, Generic[DataT]):
         tota_count: int,
         page_params: PageParams,
         sort_params: SortParams,
-    ) -> "PagedResponse":
-        total_pages = (
-            ceil(tota_count / page_params.size) if tota_count > 0 else 1
-        )
+    ) -> "PagedResponse[DataT]":
+        total_p = ceil(tota_count / page_params.size) if tota_count > 0 else 1
+        past_p = page_params.page - 1 if page_params.page > 1 else None
+        next_p = page_params.page + 1 if page_params.page < total_p else None
 
         return cls(
             data=items,
@@ -137,13 +138,8 @@ class PagedResponse(BaseModel, Generic[DataT]):
                 sort_by=sort_params.sort_by,
                 sort_order=sort_params.sort_order,
                 total_items=tota_count,
-                total_pages=total_pages,
-                next_page=(
-                    page_params.page + 1
-                    if page_params.page < total_pages else None
-                ),
-                past_page=(
-                    page_params.page -1 if page_params.page > 1 else None
-                ),
+                total_pages=total_p,
+                next_page=next_p,
+                past_page=past_p,
             ),
         )

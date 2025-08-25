@@ -1,0 +1,49 @@
+name: Functional Tests
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  functional_tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: [3.13]
+
+    steps:
+      # 1. Клонируем репозиторий
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Загружаем переменные из .env
+      - name: Load environment variables
+        uses: joelwmale/env-action@v1
+        with:
+          envFile: ./.env
+
+      # 3. Устанавливаем Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      # 4. Переключаемся в директорию с docker-compose
+      - name: Change to functional tests directory
+        run: cd ./tests/functional
+
+      # 5. Скачиваем образы и запускаем контейнеры
+      - name: Build and start services
+        run: docker-compose up -d --build
+
+      # 6. Ждем, пока сервисы станут доступными (healthcheck)
+      - name: Wait for services
+        run: docker-compose exec tests_service python3 utils/wait_for_src.py
+
+      # 7. Запускаем тесты
+      - name: Run functional tests
+        run: docker-compose exec tests_service pytest --rootdir=/app /tests/functional
+
+      # 8. Останавливаем и удаляем контейнеры
+      - name: Tear down
+        run: docker-compose down
